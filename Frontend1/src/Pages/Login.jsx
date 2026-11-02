@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {toast,ToastContainer} from 'react-toastify'
+import { API_BASE_URL } from '../config/api'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -14,7 +15,7 @@ const Login = () => {
              return toast.error("All Fields Necessary")
         }
         try {
-            const login= await axios.post('http://localhost:5000/api/login',{
+            const login= await axios.post(`${API_BASE_URL}/login`,{
                 email,password
             })
             setEmail("")

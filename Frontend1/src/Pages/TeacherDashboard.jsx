@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import {toast,ToastContainer} from 'react-toastify'
 import {useNavigate} from 'react-router-dom'
+import { API_BASE_URL } from '../config/api'
 const TeacherDashboard = () => {
   const navigate = useNavigate()
   const id =localStorage.getItem("id")
@@ -11,7 +12,7 @@ const TeacherDashboard = () => {
 
   const fetchUser=async()=>{
 try {
-    const user = await axios.get(`http://localhost:5000/api/dashboard/${id}`,{
+    const user = await axios.get(`${API_BASE_URL}/dashboard/${id}`,{
         headers:{
             Authorization:`Bearer ${token}`
         }
@@ -25,7 +26,7 @@ try {
 
 const fetchProjects =async()=>{
   try {
-    const projects = await axios.get(`http://localhost:5000/api/teacher/projects`,{
+    const projects = await axios.get(`${API_BASE_URL}/teacher/projects`,{
       headers:{
         teacherid:`${id}`
       }
@@ -40,7 +41,7 @@ const fetchProjects =async()=>{
 const approved = async(pid)=>{
   try {
     
-  const approve = await axios.patch(`http://localhost:5000/api/project/${pid}/approve`)
+  const approve = await axios.patch(`${API_BASE_URL}/project/${pid}/approve`)
     toast.success("Project Approved")
   fetchProjects()
   } catch (error) {
@@ -49,7 +50,7 @@ const approved = async(pid)=>{
 }
 const Rejected = async(pid)=>{
   try {
-    const reject = await axios.patch(`http://localhost:5000/api/project/${pid}/reject`)
+    const reject = await axios.patch(`${API_BASE_URL}/project/${pid}/reject`)
     fetchProjects()
     toast.warn("Project Rejected")
   } catch (error) {

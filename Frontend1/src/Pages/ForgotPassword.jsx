@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { API_BASE_URL } from "../config/api";
 
 const ForgotPassword = () => {
 
@@ -19,7 +20,7 @@ const ForgotPassword = () => {
     try {
 
       const response = await axios.post(
-        "http://localhost:5000/api/forgot-password",
+        `${API_BASE_URL}/forgot-password`,
         { email }
       );
 

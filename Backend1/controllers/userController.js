@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
     }
 });  
 
-const SECRET= "BharathReddy"
+const SECRET = process.env.JWT_SECRET
 
 const login = async(req,res)=>{
     const {email,password} =req.body
@@ -146,7 +146,8 @@ const forgotPassword = async (req, res) => {
     { expiresIn: "15m" }
 )
 
-const resetLink = `http://localhost:5173/reset-password/${token}`
+const frontendUrl = process.env.FRONTEND_URL.split(',')[0].trim().replace(/\/$/, '')
+const resetLink = `${frontendUrl}/reset-password/${token}`
 
 await transporter.sendMail({
     from: process.env.EMAIL_USER,

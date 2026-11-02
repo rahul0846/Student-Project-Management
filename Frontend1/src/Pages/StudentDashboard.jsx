@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import {toast,ToastContainer} from 'react-toastify'
 import {useNavigate} from 'react-router-dom'
+import { API_BASE_URL } from '../config/api'
 
 const Icon = ({ name, className = "h-5 w-5" }) => {
   const paths = {
@@ -40,7 +41,7 @@ const StudentDashboard = () => {
 
     const fetchUser = async()=>{
   try {
-      const user = await axios.get(`http://localhost:5000/api/dashboard/${id}`,{
+      const user = await axios.get(`${API_BASE_URL}/dashboard/${id}`,{
         headers:{
             Authorization: `Bearer ${token}`
         }
@@ -54,7 +55,7 @@ const StudentDashboard = () => {
 
   const fetchTeachers =async()=>{
 try {
-   const teachers = await axios.get('http://localhost:5000/api/allteachers')
+   const teachers = await axios.get(`${API_BASE_URL}/allteachers`)
    setAllTeachers(teachers.data)
 } catch (error) {
   console.log(error)
@@ -64,7 +65,7 @@ try {
 const addproject =async(e)=>{
   e.preventDefault()
 try {
-  const projects = await axios.post("http://localhost:5000/api/addproject",{
+  const projects = await axios.post(`${API_BASE_URL}/addproject`,{
     studentId:id,
     teacherId,
     project,
@@ -83,7 +84,7 @@ try {
 
 const fetchProjects =async()=>{
 try {
-  const projectsDetails = await axios.get('http://localhost:5000/api/student/projects',{
+  const projectsDetails = await axios.get(`${API_BASE_URL}/student/projects`,{
     headers:{
       studentid :`${id}`
     }
@@ -101,7 +102,7 @@ const logout=()=>{
 }
 const deleteProject=async(pid)=>{
   try {
-     const deleteProject = await axios.delete(`http://localhost:5000/api/delete/project/${pid}`)
+     const deleteProject = await axios.delete(`${API_BASE_URL}/delete/project/${pid}`)
      fetchProjects()
      toast.success("Project Deleted Sucessfully")
   } catch (error) {
